@@ -1,0 +1,21 @@
+- defaults:
+    link:
+      create: true
+      force: true
+    clean:
+      force: true
+    shell:
+      stdout: true
+      stderr: true
+
+- clean: ['~']
+
+- shell:
+  - [git submodule update --init --recursive, Installing submodules]
+  - [bash scripts/setup_zsh.sh, Install zsh and oh-my-zsh]
+  - [zsh scripts/setup_zsh_plugins.sh, Install custom zsh plugins]
+
+- link:
+    ~/.zshrc: link/.zshrc
+    ~/.gitconfig: link/.gitconfig
+    ~/.oh-my-zsh/custom/themes/agnoster.zsh-theme: link/agnoster.zsh-theme
