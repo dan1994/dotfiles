@@ -71,9 +71,10 @@ HIST_STAMPS="dd.mm.yyyy"
 plugins=(
 	git
 	gitfast
-	z
-	sudo
+	my-customizations
 	pipenv
+	sudo
+	z
 	zsh-history-substring-search
 	zsh-syntax-highlighting
 	zsh-autosuggestions
@@ -106,24 +107,3 @@ export LANG=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# CUSTOM ADDITIONS START
-
-# Extend path with user binaries
-export PATH="/home/dan/.local/bin:$PATH"
-
-# Set display to 0 by default
-export DISPLAY=:0.0
-
-alias ll="ls -lAhF"
-alias python=python3
-alias tmp='tempdir=$(mktemp -d); cd ${tempdir}; code .; trap "rm -rf ${tempdir}" EXIT'
-
-_l() {
-	[[ -f $1 ]] && less $1 || ll $1
-}
-alias l=_l
-
-# History substring search keybindings
-bindkey "$terminfo[kcuu1]" history-substring-search-up
-bindkey "$terminfo[kcud1]" history-substring-search-down

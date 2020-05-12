@@ -19,3 +19,4 @@
     ~/.zshrc: link/.zshrc
     ~/.gitconfig: link/.gitconfig
     ~/.oh-my-zsh/custom/themes/agnoster.zsh-theme: link/agnoster.zsh-theme
+    ~/.oh-my-zsh/custom/plugins/my-customizations/my-customizations.plugin.zsh: link/my-customizations.plugin.zsh
