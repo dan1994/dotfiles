@@ -25,6 +25,14 @@ alias help=run-help
 alias tmp='tempdir=$(mktemp -d); cd ${tempdir}; code .; trap "rm -rf ${tempdir}" EXIT'
 
 # Git
+__git_reset() {
+    git reset @~${1:-1}
+}
+
+__git_reset_hard() {
+    git reset --hard @~${1:-1}
+}
+
 __git_update() {
     local branch=${1:-develop}
     git co $branch
@@ -41,4 +49,6 @@ alias gf='git fetch -p'
 alias glg="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 alias gmv='git mv'
 alias gpl='git pull --rebase --ff-only'
+alias gr='__git_reset'
+alias grh='__git_reset_hard'
 alias gup='__git_update'
