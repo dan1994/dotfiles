@@ -36,7 +36,7 @@ __git_reset_hard() {
 __git_update() {
     local branch=${1:-develop}
     git co $branch
-    git pull --rebase --ff-only
+    git pull --rebase --ff-only || return 1
     git co -
     git rebase $branch
 }
