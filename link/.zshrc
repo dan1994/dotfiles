@@ -72,7 +72,6 @@ plugins=(
 	git
 	gitfast
 	my-customizations
-	pipenv
 	sudo
 	z
 	zsh-history-substring-search
