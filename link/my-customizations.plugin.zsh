@@ -3,8 +3,16 @@
 # Extend path with user binaries
 export PATH="/home/dan/.local/bin:$PATH"
 
+# Check if we are running in WSL
+grep -q -i microsoft /proc/version
+export IN_WSL=$?
+
 # Set display to 0 by default
-export DISPLAY=:0.0
+if [[ $IN_WSL ]]; then
+    export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0.0
+else
+    export DISPLAY=:0.0
+fi
 
 # History substring search keybindings
 bindkey "$terminfo[kcuu1]" history-substring-search-up
