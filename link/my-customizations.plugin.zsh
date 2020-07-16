@@ -32,6 +32,9 @@ alias python=python3
 alias help=run-help
 alias tmp='tempdir=$(mktemp -d); cd ${tempdir}; code .; trap "rm -rf ${tempdir}" EXIT'
 
+alias cp='cp -g'
+alias mv='mv -g'
+
 # Git
 __git_reset() {
     git reset @~${1:-1}

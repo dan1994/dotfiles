@@ -8,15 +8,17 @@
       stdout: true
       stderr: true
 
-- clean: ['~']
+- clean: ["~"]
 
 - shell:
-  - [git submodule update --init --recursive, Installing submodules]
-  - [bash scripts/setup_zsh.sh, Install zsh and oh-my-zsh]
-  - [zsh scripts/setup_zsh_plugins.sh, Install custom zsh plugins]
+    - [git submodule update --init --recursive, Installing submodules]
+    - [bash scripts/setup_zsh.sh, Install zsh and oh-my-zsh]
+    - [zsh scripts/setup_zsh_plugins.sh, Install custom zsh plugins]
 
 - link:
     ~/.zshrc: link/.zshrc
     ~/.gitconfig: link/.gitconfig
     ~/.oh-my-zsh/custom/themes/agnoster.zsh-theme: link/agnoster.zsh-theme
     ~/.oh-my-zsh/custom/plugins/my-customizations/my-customizations.plugin.zsh: link/my-customizations.plugin.zsh
+    ~/.local/bin/cp: link/cp
+    ~/.local/bin/mv: link/mv
