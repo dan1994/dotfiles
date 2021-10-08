@@ -9,7 +9,10 @@ export IN_WSL=$?
 
 # Set display to 0 by default
 if [[ $IN_WSL ]]; then
-    export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0.0
+    # Since Windows 11 and wslg changing the display variable will cause problems
+    if [[ ! -d /mnt/wslg ]]; then
+        export DISPLAY=$(awk '/nameserver / {print $2; exit}' /etc/resolv.conf 2>/dev/null):0.0
+    fi
 else
     export DISPLAY=:0.0
 fi
