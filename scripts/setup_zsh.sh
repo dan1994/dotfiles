@@ -1,6 +1,6 @@
 # Install zsh
 if ! which zsh > /dev/null 2>&1; then
-    sudo apt install zsh || exit 1
+    sudo apt install zsh -y || exit 1
     chsh -s $(which zsh)
 fi
 
