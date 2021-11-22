@@ -1,7 +1,7 @@
 #### General ####
 
 # Extend path with user binaries
-export PATH="/home/dan/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Check if we are running in WSL
 grep -q -i microsoft /proc/version
