@@ -79,6 +79,12 @@ plugins=(
 	zsh-autosuggestions
 )
 
+local EXTRA_PLUGINS_FILE=$ZSH/custom/plugins/extra-plugins.zsh
+if [[ -f $EXTRA_PLUGINS_FILE ]]; then
+	source $EXTRA_PLUGINS_FILE
+	plugins+=(${extra_plugins[@]})
+fi
+
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
