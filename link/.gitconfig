@@ -1,8 +1,0 @@
-[user]
-	name = Dan Arad
-	email = dan1994@gmail.com
-[alias]
-	ci = commit
-	st = status
-	br = branch
-	co = checkout
