@@ -1,8 +1,5 @@
 #### General ####
 
-# Extend path with user binaries
-export PATH="$HOME/.local/bin:$PATH"
-
 # Check if we are running in WSL
 grep -q -i microsoft /proc/version
 export IN_WSL=$?
@@ -69,3 +66,9 @@ alias gpl='git pull --rebase --ff-only'
 alias gr='__git_reset'
 alias grh='__git_reset_hard'
 alias gup='__git_update'
+
+
+#### NodeJS ####
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
