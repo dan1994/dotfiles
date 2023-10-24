@@ -72,3 +72,8 @@ alias gup='__git_update'
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+
+#### Go ####
+
+export PATH=/usr/local/go/bin:${PATH}
+export PATH=$(go env GOPATH):${PATH}
