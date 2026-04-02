@@ -1,10 +1,8 @@
-#### General ####
-
 # Check if we are running in WSL
 grep -q -i microsoft /proc/version
 export IN_WSL=$?
 
-# Set display to 0 by default
+# Set display correctly
 if [[ $IN_WSL ]]; then
     # Since Windows 11 and wslg changing the display variable will cause problems
     if [[ ! -d /mnt/wslg ]]; then
@@ -18,20 +16,15 @@ fi
 bindkey "$terminfo[kcuu1]" history-substring-search-up
 bindkey "$terminfo[kcud1]" history-substring-search-down
 
-# Replace virtualenv default prompt with agnoster's
-VIRTUAL_ENV_DISABLE_PROMPT=1
+export PATH=${HOME}/.local/bin:$PATH
 
-
-#### Aliases ####
-
-# Misc
+# Common Utilities
 alias ll="ls -lAhF"
 _l() {
 	[[ -f $1 ]] && less $1 || ll $1
 }
 alias l=_l
 
-alias python=python3
 alias help=run-help
 alias tmp='tempdir=$(mktemp -d); cd ${tempdir}; code .; trap "rm -rf ${tempdir}" EXIT'
 
@@ -67,13 +60,27 @@ alias gr='__git_reset'
 alias grh='__git_reset_hard'
 alias gup='__git_update'
 
+# For commit messages
+if [[ "$IN_WSL" ]]; then
+    export EDITOR="\"$(echo $PATH | tr ':' '\n' | grep "Microsoft VS Code")/code\" --wait"
+else
+    export EDITOR="code --wait"
+fi
 
-#### NodeJS ####
-
+# NodeJS
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 
-#### Go ####
-
+# Go
 export PATH=/usr/local/go/bin:${PATH}
 export PATH=$(go env GOPATH):${PATH}
+
+# Python
+alias python=python3
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if which pyenv > /dev/null; then
+    eval "$(pyenv init - zsh)"
+    eval "$(pyenv virtualenv-init -)"
+fi
