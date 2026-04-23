@@ -1,6 +1,6 @@
 # Check if we are running in WSL
 grep -q -i microsoft /proc/version
-export IN_WSL=$?
+[[ $? -eq 0 ]] && IN_WSL=1 || IN_WSL=
 
 # Set display correctly
 if [[ $IN_WSL ]]; then
@@ -60,12 +60,17 @@ alias gr='__git_reset'
 alias grh='__git_reset_hard'
 alias gup='__git_update'
 
-# For commit messages
 if [[ "$IN_WSL" ]]; then
-    export EDITOR="\"$(echo $PATH | tr ':' '\n' | grep "Microsoft VS Code")/code\" --wait"
+    local CODE="$(echo $PATH | tr ':' '\n' | grep "Microsoft VS Code")/code"
+elif [[ "$VSCODE_GIT_ASKPASS_NODE" == *serve-web* ]]; then
+    local CODE="$(find ${HOME}/.vscode-server/cli/servers -iname code)"
 else
-    export EDITOR="code --wait"
+    local CODE=code
 fi
+alias code=$CODE
+
+# For commit messages
+export EDITOR="$CODE --wait"
 
 # NodeJS
 export NVM_DIR="$HOME/.nvm"
@@ -80,7 +85,7 @@ alias python=python3
 
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-if which pyenv > /dev/null; then
+if which pyenv > /dev/null 2>&1; then
     eval "$(pyenv init - zsh)"
     eval "$(pyenv virtualenv-init -)"
 fi
