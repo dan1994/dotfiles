@@ -48,6 +48,45 @@ __git_update() {
     git rebase $branch
 }
 
+__git_is_in() {
+    if [[ $# -ne 2 ]]; then
+        echo "Usage: gii <commit-message-text> <git-ref>"
+        echo "Example: gii \"[feat-42] add login\" main"
+        return 1
+    fi
+
+    local text="$1"
+    local ref="$2"
+
+    if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        echo "Error: Not a git repository."
+        return 1
+    fi
+
+    if ! git rev-parse --verify "$ref" >/dev/null 2>&1; then
+        echo "Error: Git ref '$ref' does not exist."
+        return 1
+    fi
+
+    local matching_commit
+    matching_commit=$(git log "$ref" --grep="$text" -F --format="%H" -n 1)
+
+    if [[ -n "$matching_commit" ]]; then
+        echo "✓ Yes: A commit matching '$text' (${matching_commit:0:7}) is included in '$ref'."
+        return 0
+    else
+        local global_commit
+        global_commit=$(git log --all --grep="$text" -F --format="%H" -n 1)
+
+        if [[ -n "$global_commit" ]]; then
+            echo "✗ No: A matching commit (${global_commit:0:7}) exists in the repo, but it is NOT included in '$ref'."
+        else
+            echo "✗ No: No commit containing '$text' was found anywhere in the repository."
+        fi
+        return 1
+    fi
+}
+
 alias gci='git commit -m'
 alias gd='git diff -w'
 alias gdc='git diff -w --cached'
@@ -59,6 +98,7 @@ alias gpl='git pull --rebase --ff-only'
 alias gr='__git_reset'
 alias grh='__git_reset_hard'
 alias gup='__git_update'
+alias gii='__git_is_in'
 
 if [[ "$IN_WSL" ]]; then
     local CODE="$(echo $PATH | tr ':' '\n' | grep "Microsoft VS Code")/code"
